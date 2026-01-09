@@ -1,4 +1,4 @@
-package com.mycompany.seleniumproject.pages;
+package np.com.moco.seleniumproject.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
