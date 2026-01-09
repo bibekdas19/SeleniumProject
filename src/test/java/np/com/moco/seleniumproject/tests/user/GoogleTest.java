@@ -1,6 +1,6 @@
-package tests;
+package np.com.moco.seleniumproject.tests.user;
 
-import com.mycompany.seleniumproject.pages.GoogleSearchPage;
+import np.com.moco.seleniumproject.pages.GoogleSearchPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
