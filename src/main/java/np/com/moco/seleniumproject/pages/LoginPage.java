@@ -1,44 +1,76 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package np.com.moco.seleniumproject.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class LoginPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
 
-    // Locators
-    private By emailField = By.id("login_user"); 
-    private By passwordField = By.id("login_password");
-    private By loginButton = By.xpath("/html/body/div/div/div/div/div/div/div[3]/div/button");
-    
-    private By dashboardHeader = By.xpath("/html/body/div/div/div[2]/div[2]/div/div[1]/div/div/h3/strong");
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
+    // Locators using PageFactory (@FindBy)
+    @FindBy(id = "login_user")
+    private WebElement emailField;
+
+    @FindBy(id = "login_password")
+    private WebElement passwordField;
+
+    @FindBy(xpath = "/html/body/div/div/div/div/div/div/div[3]/div/button")
+    private WebElement loginButton;
+
+    @FindBy(xpath = "/html/body/div/div/div[2]/div[2]/div/div[1]/div/div/h3/strong")
+    private WebElement dashboardHeader;
+
+    // Constructor
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // 10s is usually safer
+        PageFactory.initElements(driver, this);
     }
 
-    public void login(String email, String pass) {
-        driver.findElement(emailField).sendKeys(email);
-        driver.findElement(passwordField).sendKeys(pass);
-        driver.findElement(loginButton).click();
+    /**
+     * Performs login action and returns current page object (useful for chaining)
+     */
+    public LoginPage login(String email, String password) {
+        wait.until(ExpectedConditions.visibilityOf(emailField))
+            .sendKeys(email);
+
+        wait.until(ExpectedConditions.visibilityOf(passwordField))
+            .sendKeys(password);
+
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton))
+            .click();
+
+        return this;  // returns itself → you can chain .isDashboardVisible()
     }
-    
-    public boolean isDashBoardVisible(){
-       try{
-//           return.wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardHeader)).isDisplayed();
-       return wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardHeader)).isDisplayed();
-       }catch (Exception e){
-       return false;
-       }
+
+    /**
+     * Better version: checks if dashboard header is visible after login
+     */
+    public boolean isDashboardVisible() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(dashboardHeader))
+                       .isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
-    
+
+    /**
+     * Alternative check: more robust way using URL (recommended in many cases)
+     */
+    public boolean isOnDashboardPage() {
+        return wait.until(d -> driver.getCurrentUrl().contains("dashboard"));
+    }
+
+    // Optional: if you want to know when login is fully completed
+    public boolean isLoginSuccessful() {
+        return isDashboardVisible() || isOnDashboardPage();
+    }
 }
