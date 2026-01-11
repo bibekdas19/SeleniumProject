@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.CreateUserTest to edit this template
- */
+
 package np.com.moco.seleniumproject.tests.user;
 
 import np.com.moco.seleniumproject.base.BaseTest;
 import np.com.moco.seleniumproject.pages.LoginPage;
 import np.com.moco.seleniumproject.assertions.LoginAssertions;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
@@ -19,6 +17,26 @@ public class LoginPageTest extends BaseTest {
         loginPage.login(config.getProperty("username"), config.getProperty("password"));
         
         //Assertion check if dashboard is loaded
-        LoginAssertions.assertUserLogged();
+        LoginAssertions.assertUserLogged(driver);
+    }
+    
+    @Test
+    public void testEmptyEmail() throws InterruptedException {
+        
+    }
+    
+    @Test
+    public void testEmptyPass() throws InterruptedException {
+        
+    }
+    
+    @Test
+    public void testInvalidEmail() throws InterruptedException {
+        
+    }
+    
+    @Test
+    public void testEmptyPassword() throws InterruptedException {
+        
     }
 }
