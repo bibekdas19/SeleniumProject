@@ -7,10 +7,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
+    LoginPage loginPage;
 
     @Test
     public void testSuccessfulLogin() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
+        // LoginPage loginPage = new LoginPage(driver);
         // Reading values from config.properties via the 'config' object in BaseTest
         loginPage.login(config.getProperty("username"), config.getProperty("password"));
 
@@ -20,7 +21,7 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void testEmptyEmail() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
+        // LoginPage loginPage = new LoginPage(driver);
         loginPage.login("", config.getProperty("password"));
         // Verify user is not logged in and appropriate error is shown
         Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in with empty email");
@@ -29,15 +30,16 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void testEmptyPass() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
+        // LoginPage loginPage = new LoginPage(driver);
         loginPage.login(config.getProperty("username"), "");
         // Verify user is not logged in when password is empty
         Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in with empty password");
+        
     }
 
     @Test
     public void testInvalidEmail() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
+        // LoginPage loginPage = new LoginPage(driver);
         loginPage.login("invalid@example.com", config.getProperty("password"));
         // Verify invalid credentials do not allow login
         Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in with invalid email");
@@ -45,9 +47,18 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void testEmptyPassword() throws InterruptedException {
-        LoginPage loginPage = new LoginPage(driver);
+        // LoginPage loginPage = new LoginPage(driver);
         // both fields empty
         loginPage.login("", "");
         Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in with empty credentials");
     }
+
+    @Test
+    public void checkPageTitle() throws InterruptedException {
+        String expectedTitle = "Flight Ticket System";
+        String actualTitle = driver.getTitle();
+        Assert.assertEquals(actualTitle, expectedTitle, "Page title should match expected value");
+    }
+
+    
 }

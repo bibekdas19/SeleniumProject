@@ -17,7 +17,7 @@ public class LoginAssertions { // Class: contains assertions related to login be
         try { // try: attempt to locate the dashboard header within a timeout
             WaitUtils.waitForElementVisible(driver, dashboardHeader, 10); // wait until `dashboardHeader` is visible
                                                                           // (10s timeout)
-            screenshots.takeScreenshot(driver, "login_success"); // on success, take a screenshot labeled
+            // screenshots.takeScreenshot(driver, "login_success"); // on success, take a screenshot labeled
                                                                  // "login_success"
         } catch (Exception e) { // catch: any exception (timeout, no such element, etc.) indicates failure
             screenshots.takeScreenshot(driver, "login_failed"); // take a screenshot labeled "login_failed" for
@@ -30,7 +30,7 @@ public class LoginAssertions { // Class: contains assertions related to login be
     public static void assertEmailErrorIsDisplayed(WebDriver driver) {
         try {
             WaitUtils.waitForElementVisible(driver, emptyEmailErrorMessage, 5); // wait until the error message is visible (5s timeout)
-            screenshots.takeScreenshot(driver, "Email_Error_Check"); // take a screenshot labeled "Email_Error_Check"
+            // screenshots.takeScreenshot(driver, "Email_Error_Check"); // take a screenshot labeled "Email_Error_Check"
         } catch (Exception e) {
             screenshots.takeScreenshot(driver, "Email_Error_Missing"); // take a screenshot labeled "Email_Error_Missing" if not found
             Assert.fail("Email error message not displayed"); // fail the test with a clear message
