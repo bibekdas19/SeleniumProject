@@ -5,14 +5,16 @@
 package np.com.moco.seleniumproject.pages;
 
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 // import dev.failsafe.internal.util.Assert;
 import np.com.moco.seleniumproject.utils.WaitUtils;
-import np.com.moco.seleniumproject.utils.screenshots;
-import org.testng.Assert; // TestNG assertions
+
 
 
 /**
@@ -26,12 +28,12 @@ public class LoginPage {
    private final By username = By.id("login_user");
    private final By password = By.id("login_password");
    private final By loginBtn = By.xpath("//button[contains(@class,'btn-primary')]");
+   private final By errorDescription = By.className("modal-title");
 
 
    public LoginPage(WebDriver driver) {
        this.driver = driver;
    }
-
 
    public void login(String user, String pass) {
        // clear existing values and enter credentials
@@ -51,6 +53,12 @@ public class LoginPage {
            // If click is intercepted (e.g., overlay or disabled state), ignore — tests will assert post-conditions instead
        }
    }
+
+   public String getErrorMessage() {
+        // Wait for the error to appear before grabbing text
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorDescription)).getText();
+    }
 
 
    public boolean isUserDisplayed() {

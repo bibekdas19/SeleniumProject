@@ -4,19 +4,26 @@ import np.com.moco.seleniumproject.base.BaseTest;
 import np.com.moco.seleniumproject.pages.LoginPage;
 import np.com.moco.seleniumproject.assertions.LoginAssertions;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginPageTest extends BaseTest {
     LoginPage loginPage;
 
+    @BeforeMethod
+    public void setUpTest() {
+        loginPage = new LoginPage(driver);
+    }
+
     @Test
     public void testSuccessfulLogin() throws InterruptedException {
-        // LoginPage loginPage = new LoginPage(driver);
+        //  LoginPage loginPage = new LoginPage(driver);
         // Reading values from config.properties via the 'config' object in BaseTest
         loginPage.login(config.getProperty("username"), config.getProperty("password"));
 
         // Assertion check if dashboard is loaded
         LoginAssertions.assertUserLogged(driver);
+        Assert.assertTrue(loginPage.isUserDisplayed(), "User should be logged in successfully");
     }
 
     @Test
@@ -47,7 +54,7 @@ public class LoginPageTest extends BaseTest {
 
     @Test
     public void testEmptyPassword() throws InterruptedException {
-        // LoginPage loginPage = new LoginPage(driver);
+         LoginPage loginPage = new LoginPage(driver);
         // both fields empty
         loginPage.login("", "");
         Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in with empty credentials");
@@ -60,5 +67,30 @@ public class LoginPageTest extends BaseTest {
         Assert.assertEquals(actualTitle, expectedTitle, "Page title should match expected value");
     }
 
+    @Test
+    public void checkPageURL() throws InterruptedException {
+        String expectedURL = config.getProperty("url");
+        String actualURL = driver.getCurrentUrl();
+        Assert.assertEquals(actualURL, expectedURL, "Page URL should match expected value");
+    }
+
+    @Test
+    public void testWhitespaceInCredentials() throws InterruptedException {
+        // LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("  " + config.getProperty("username") + "  ", "  " + config.getProperty("password") + "  ");
+        // Verify that leading/trailing whitespace is handled correctly
+        Assert.assertFalse(loginPage.isUserDisplayed(), "User should not be logged in.");
+    }   
+
+    @Test
+    public void testLoginWithNonExistentUser() throws InterruptedException {
+        loginPage.login("abc@gmail.com", config.getProperty("password"));
+        String actualErrorMessage = loginPage.getErrorMessage();
+        String expectedErrorMessage = "User does not exist";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message should indicate non-existent user");
+    }
+    
+       
+ 
     
 }
