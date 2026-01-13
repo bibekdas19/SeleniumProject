@@ -17,6 +17,22 @@ public class OperatorPage {
         this.driver = driver;
     }
     
+    public void AddOperator(String name, String email,String contact,String contract,String organization){
+        
+    }
+    
+    public void ViewOperator(String email){
+        
+    }
+    
+    public void disableOperator(String email){
+        
+    }
+    
+    public void ResetPassword(String email){
+        
+    }
+    
     
     
     
