@@ -19,23 +19,28 @@ public class OperatorPage {
         this.driver = driver;
     }
     
-    public void AddOperator(String name, String email,String contact,String contract){
+    public void AddOperator(String name, String email,String contact){
         driver.findElement(addbutton).click();
-        driver.findElement(fullName).sendKeys("Sandesh Thapa Magar");
-        driver.findElement(emailAddress).sendKeys("sandeshthapa@moco.com.np");
-        driver.findElement(contactNumber).sendKeys("9849719431");
+        driver.findElement(fullName).sendKeys(name);
+        driver.findElement(emailAddress).sendKeys(email);
+        driver.findElement(contactNumber).sendKeys(contact);
         WebElement ddown = driver.findElement(organi);
         Select select = new Select(ddown);
         select.selectByValue("MOCO");
+        // checklist as default user. clicking all the checkboxes
+        driver.findElement(By.xpath("//input[@class=\"form-check-input\"and @type=\"checkbox\"]")).click();
+        
+        //clicking the add button
+        driver.findElement(By.xpath("//button[@class=\"btn\"]")).click();
         
     }
     
-    public void ViewOperator(String email){
-        
-    }
+   public void viewOperator(String email) {
+    driver.findElement(By.xpath("//a[@href='#/operator/view/" + email + "']")).click();
+}
     
     public void disableOperator(String email){
-        
+
     }
     
     public void ResetPassword(String email){

@@ -14,6 +14,8 @@ public class LoginPageTest extends BaseTest {
     public void setUpTest() {
         loginPage = new LoginPage(driver);
     }
+    
+    
 
     @Test
     public void testSuccessfulLogin() throws InterruptedException {

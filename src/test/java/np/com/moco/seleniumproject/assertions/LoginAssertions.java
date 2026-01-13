@@ -17,7 +17,7 @@ public class LoginAssertions { // Class: contains assertions related to login be
         try { // try: attempt to locate the dashboard header within a timeout
             WaitUtils.waitForElementVisible(driver, dashboardHeader, 10); // wait until `dashboardHeader` is visible
                                                                           // (10s timeout)
-            // screenshots.takeScreenshot(driver, "login_success"); // on success, take a screenshot labeled
+             screenshots.takeScreenshot(driver, "login_success"); // on success, take a screenshot labeled
                                                                  // "login_success"
         } catch (Exception e) { // catch: any exception (timeout, no such element, etc.) indicates failure
             screenshots.takeScreenshot(driver, "login_failed"); // take a screenshot labeled "login_failed" for
