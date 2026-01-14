@@ -22,7 +22,9 @@ import np.com.moco.seleniumproject.utils.WaitUtils;
 * @author Dell
 */
 public class LoginPage {
-   private final WebDriver driver;
+    // Each Page Object holds a reference to the WebDriver so it can interact with the browser.
+    // This `driver` is NOT created here — it is passed in from the test (the instance created in BaseTest).
+    private final WebDriver driver;
 
 
    private final By username = By.id("login_user");
@@ -32,6 +34,8 @@ public class LoginPage {
 
 
    public LoginPage(WebDriver driver) {
+       // store the reference to the shared WebDriver instance
+       // (this points to the same object created in BaseTest.setUp())
        this.driver = driver;
    }
 
@@ -62,6 +66,7 @@ public class LoginPage {
 
 
    public boolean isUserDisplayed() {
+       // Simple check: inspect page source for a welcome text. This uses the same browser state.
        return driver.getPageSource().contains(" Welcome, Vivek");
    }
 }
