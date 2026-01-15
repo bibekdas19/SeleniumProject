@@ -14,8 +14,8 @@ public class OperatorAssertions {
 
     public void verifyInvalidEmailError() {
         Assert.assertTrue(
-                operatorPage.isErrorMessageDisplayed("Invalid"),
-                "Invalid email error message not displayed"
+                operatorPage.isErrorMessageDisplayed("Email is not valid"),
+                "Email is not valid."
         );
     }
 

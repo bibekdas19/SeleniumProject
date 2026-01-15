@@ -1,4 +1,4 @@
-package np.com.moco.seleniumproject.base;
+ package np.com.moco.seleniumproject.base;
 
 import np.com.moco.seleniumproject.utils.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
