@@ -24,7 +24,7 @@ public class LoginPageTest extends BaseTest { // extends BaseTest to inherit `dr
         public void testSuccessfulLogin() throws InterruptedException {
                 // NOTE: We could reuse the `loginPage` field initialized in @BeforeMethod.
                 // Creating a new LoginPage with the same `driver` is redundant but harmless — both reference the same browser.
-                LoginPage loginPage = new LoginPage(driver);
+                // LoginPage loginPage = new LoginPage(driver);
                 // `config` is provided by BaseTest (it reads config.properties). We use it to avoid hardcoding credentials.
                 loginPage.login(config.getProperty("username"), config.getProperty("password"));
 
