@@ -3,6 +3,7 @@ package np.com.moco.seleniumproject.utils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import java.time.Duration;
+import java.util.List;
 
 public class WaitUtils {
 
@@ -53,4 +54,19 @@ public class WaitUtils {
         element.clear();
         element.sendKeys(text);
     }
+    
+    //scrollup
+    public static void scrollIntoView(WebDriver driver, WebElement element) {
+    ((JavascriptExecutor) driver)
+            .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+}
+
+    
+public static List<WebElement> waitForElementsVisible(WebDriver driver, By locator) {
+    return new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT))
+            .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+}
+
+
+
 }

@@ -4,15 +4,15 @@ import np.com.moco.seleniumproject.utils.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
+
 import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
     protected ConfigReader config;
 
-    @BeforeMethod
+    @BeforeTest
     public void setUp() {
         config = new ConfigReader();
         WebDriverManager.chromedriver().setup();
@@ -22,7 +22,7 @@ public class BaseTest {
         driver.get(config.getProperty("url"));
     }
 
-    @AfterMethod
+    @AfterTest
     public void tearDown() {
         if (driver != null) {
             driver.quit();

@@ -5,13 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import java.util.List;
+//import java.util.List;
 
 
 
 public class OperatorPage {
     private final WebDriver driver;
-    private final By addbutton = By.xpath("//a[contains(@href,'operator')]");
+    private final By operatorSection = By.xpath("//*[@id=\"app\"]/div/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/a");
+    private final By addbutton = By.xpath("//*[@id=\"app\"]/div/div[2]/div[2]/div/div[1]/div/div/div[2]/a");
     private final By fullName = By.xpath("//input[@placeholder=\"Full Name\"]");
     private final By emailAddress = By.xpath("//input[@placeholder=\"Email Address\"]");
     private final By contactNumber = By.xpath("//input[@placeholder=\"Contact Number\"]");
@@ -27,6 +28,7 @@ public class OperatorPage {
     }
 
     public void openAddOperatorForm() {
+        WaitUtils.safeClick(driver, operatorSection);
         WaitUtils.safeClick(driver, addbutton);
     }
     
@@ -48,14 +50,14 @@ public class OperatorPage {
     }
 
     private void selectAllPermissions() {
-        List<WebElement> allCheckboxes = driver.findElements(checkboxes);
+    for (WebElement checkbox : WaitUtils.waitForElementVisible (driver, checkboxes)) {
+        WaitUtils.scrollIntoView(driver, (WebElement) checkboxes);
 
-        for (WebElement checkbox : allCheckboxes) {
-            if (!checkbox.isSelected()) {
-                checkbox.click();
-            }
+        if (!checkbox.isSelected()) {
+            WaitUtils.safeClick(driver, checkboxes);
         }
     }
+}
     
     public boolean isErrorMessageDisplayed(String message) {
         return driver.findElements(errorMessage)
@@ -82,3 +84,4 @@ public class OperatorPage {
     
     
 }
+

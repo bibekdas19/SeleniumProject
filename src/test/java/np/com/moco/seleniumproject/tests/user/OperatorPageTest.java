@@ -61,7 +61,7 @@ public class OperatorPageTest extends BaseTest  {
     
     @AfterTest
     public void LogOut() {
-        
+        loginPage.LogOut();
     }
     
     

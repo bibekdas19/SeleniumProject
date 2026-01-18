@@ -59,6 +59,13 @@ public class LoginPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorDescription)).getText();
     }
+   
+   public void LogOut() {
+       //wait simply
+      
+       driver.findElement(By.xpath("//img[@class=\"avatar-img\"]")).click();
+       driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[2]/div[1]/div/ul[4]/div/div/a[2]/svg/path")).click();
+   }
 
 
    public boolean isUserDisplayed() {
