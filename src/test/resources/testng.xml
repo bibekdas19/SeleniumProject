@@ -3,7 +3,8 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
-      <class name="np.com.moco.seleniumproject.tests.user.CreateUserTest"/>
+      <class name="np.com.moco.seleniumproject.tests.user.LoginPageTest"/>
+       <class name="np.com.moco.seleniumproject.tests.user.OperatorPageTest"/>
     </classes>
   </test>
 </suite>
