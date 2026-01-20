@@ -17,32 +17,31 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author sandesh
  */
 public class FlightTickets {
-    
+
     private final WebDriver driver;
-    private final By flightTicketLoc= By.xpath("//a[contains(@href,'flighttickets')]");
+    private final By flightTicketLoc = By.xpath("//a[contains(@href,'flighttickets')]");
     private final By mocoId = By.xpath("//*[@placeholder=\"MOCO ID\" and @id=\"searchBar\"]");
     private final By SearchButton = By.xpath("//button[@class=\'btn btn-undefined\']");
     private final By ContactName = By.xpath("//input[@id='searchBar' and @placeholder=\'Contact Name\']");
-    private final By notFoundPopMsg= By.xpath("//*[@class=\"modal-body\" and contains(text(), 'Purchase not found')]");
-    private final By invContNamePopMsg = By.xpath("//div[@class=\"modal-body\"  and contains(text(),\"Invalid contact name data found.\")]");
-    
-    public FlightTickets(WebDriver driver){
-    this.driver = driver;
+    private final By notFoundPopMsg = By.xpath("//*[@class=\"modal-body\" and contains(text(), 'Purchase not found')]");
+    private final By invalidContNamePopMsg = By.xpath("//div[@class=\"modal-body\"  and contains(text(),\"Invalid contact name data found.\")]");
+
+    public FlightTickets(WebDriver driver) {
+        this.driver = driver;
     }
-    
-    public void searchTickets(String userMocoID, String UserContName){
+
+    public void searchTickets(String userMocoID, String UserContName) {
         WaitUtils.safeClick(driver, flightTicketLoc);
         WaitUtils.sendKeys(driver, mocoId, userMocoID);
         WaitUtils.sendKeys(driver, ContactName, UserContName);
         WaitUtils.safeClick(driver, SearchButton);
 
     }
-    
-       public String getErrorPopMessage() {
+
+    public String getErrorPopMessage() {
         return new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(invContNamePopMsg))
+                .until(ExpectedConditions.visibilityOfElementLocated(invalidContNamePopMsg))
                 .getText();
     }
-            
-    
+
 }
