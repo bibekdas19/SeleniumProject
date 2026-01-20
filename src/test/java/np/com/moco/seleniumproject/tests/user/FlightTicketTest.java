@@ -33,4 +33,13 @@ public class FlightTicketTest extends baseAuthenticatedTest{
         Assert.assertEquals(acutalErrorMessage,expectedErrorMessage,"Error message mismatch! ");
     }
     
+    
+    @Test
+    public void searchFlightwithInvaNumber(){
+       flightTickets.searchTickets("982243", "SUCHIT BANIYA");
+       String actualErrorMessge = flightTickets.getErrorPopMessage();
+        System.out.println(actualErrorMessge);
+        String expectedMessage = "Invalid Contact number";
+        Assert.assertEquals(actualErrorMessge,expectedMessage,"Should match");
+    }
 }

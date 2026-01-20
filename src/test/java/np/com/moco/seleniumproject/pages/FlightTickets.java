@@ -25,7 +25,9 @@ public class FlightTickets {
     private final By ContactName = By.xpath("//input[@id='searchBar' and @placeholder=\'Contact Name\']");
     private final By notFoundPopMsg = By.xpath("//*[@class=\"modal-body\" and contains(text(), 'Purchase not found')]");
     private final By invalidContNamePopMsg = By.xpath("//div[@class=\"modal-body\"  and contains(text(),\"Invalid contact name data found.\")]");
-
+//    private final By invalidContNum= By.xpath(xpathExpression)
+    private final By chooseDate= By.xpath("//input[@placeholder=\"Request Date\"]");
+    
     public FlightTickets(WebDriver driver) {
         this.driver = driver;
     }
