@@ -28,6 +28,7 @@ public class OperatorPage {
     public OperatorPage(WebDriver driver) {
         this.driver = driver;
     }
+    
 
     public void openAddOperatorForm() {
         WaitUtils.safeClick(driver, addbutton);

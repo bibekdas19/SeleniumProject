@@ -15,10 +15,10 @@ public class OperatorPageTest extends baseAuthenticatedTest {
 
     @BeforeMethod
     public void setUpTest() {
-        loginPage = new LoginPage(driver);
+//        loginPage = new LoginPage(driver);
         operatorPage = new OperatorPage(driver);
         operatorAssertions = new OperatorAssertions(operatorPage);
-        loginPage.login(config.getProperty("username"), config.getProperty("password"));
+//        loginPage.login(config.getProperty("username"), config.getProperty("password"));
     }
 
     @Test(priority = 1)
