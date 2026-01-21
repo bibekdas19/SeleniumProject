@@ -4,15 +4,12 @@
  */
 package np.com.moco.seleniumproject.pages;
 
-import java.io.File;
 import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import np.com.moco.seleniumproject.utils.WaitUtils;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import np.com.moco.seleniumproject.utils.screenshots;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -54,13 +51,14 @@ public class FlightTickets {
 
         //chosing date
         try {
-            File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             WaitUtils.safeClick(driver, chooseDate);
             WaitUtils.safeClick(driver, prevMonth);
             By specificsDay = By.xpath(String.format(dayXpath, Day));
             WaitUtils.safeClick(driver, specificsDay);
-            FileUtils.copyFile(scrFile, new File("./debug_screenshot_" + System.currentTimeMillis() + ".png"));
+            screenshots.takeScreenshot(driver, "success screenshot");
+
         } catch (Exception e) {
+            System.out.println("Unabel to screenshot");
         }
 
         //choosign the status
