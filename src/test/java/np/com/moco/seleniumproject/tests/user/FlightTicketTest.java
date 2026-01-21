@@ -26,7 +26,8 @@ public class FlightTicketTest extends baseAuthenticatedTest{
    
     @Test
     public void searchFlightWthAllValidCase(){
-        flightTickets.searchTickets("9860933918", "SUCHIT BANIYA");
+        
+        flightTickets.searchTickets("9860933918", "SUCHIT BANIYA","10");
         String acutalErrorMessage = flightTickets.getErrorPopMessage();
         System.out.println(acutalErrorMessage);
         String expectedErrorMessage ="Invalid contact name data found.";
@@ -36,7 +37,7 @@ public class FlightTicketTest extends baseAuthenticatedTest{
     
     @Test
     public void searchFlightwithInvaNumber(){
-       flightTickets.searchTickets("982243", "SUCHIT BANIYA");
+       flightTickets.searchTickets("982243", "SUCHIT BANIYA","10");
        String actualErrorMessge = flightTickets.getErrorPopMessage();
         System.out.println(actualErrorMessge);
         String expectedMessage = "Invalid Contact number";

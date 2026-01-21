@@ -4,12 +4,17 @@
  */
 package np.com.moco.seleniumproject.pages;
 
+import java.io.File;
 import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import np.com.moco.seleniumproject.utils.WaitUtils;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -26,15 +31,42 @@ public class FlightTickets {
     private final By notFoundPopMsg = By.xpath("//*[@class=\"modal-body\" and contains(text(), 'Purchase not found')]");
     private final By invalidContNamePopMsg = By.xpath("//div[@class=\"modal-body\"  and contains(text(),\"Invalid contact name data found.\")]");
 //    private final By invalidContNum= By.xpath(xpathExpression)
-    private final By chooseDate= By.xpath("//input[@placeholder=\"Request Date\"]");
-    
+
+    //locator for Request Date
+    private final By chooseDate = By.xpath("//input[@placeholder=\"Request Date\"]");
+    private final By prevMonth = By.xpath("//button[@aria-label=\"Previous month\"]");
+    private final By nextMonth = By.xpath("//button[@aria-label=\"Next month\"]");
+    private final By MonthSelect = By.xpath("//button[@data-test-id=\"month-toggle-overlay-0\"]");
+    private final String dayXpath = "//div[contains(@class, 'dp__cell_inner') and text()='%s']";
+//    private final String FindDayXpath = String.format(dayXpath, 10);
+
+    //locator for select status
+    private final By selectStatus = By.xpath("//div[contains(@class, 'col-sm-2')]//select[@class='form-select']");
+    private final By selectSuccessStatus = By.xpath("//div[contains(@class, 'col-sm-2')]//select[@class='form-select']//option[@value=\"SUCCESS\"]");
+
     public FlightTickets(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void searchTickets(String userMocoID, String UserContName) {
+    public void searchTickets(String userMocoID, String UserContName, String Day) {
         WaitUtils.safeClick(driver, flightTicketLoc);
         WaitUtils.sendKeys(driver, mocoId, userMocoID);
+
+        //chosing date
+        try {
+            File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            WaitUtils.safeClick(driver, chooseDate);
+            WaitUtils.safeClick(driver, prevMonth);
+            By specificsDay = By.xpath(String.format(dayXpath, Day));
+            WaitUtils.safeClick(driver, specificsDay);
+            FileUtils.copyFile(scrFile, new File("./debug_screenshot_" + System.currentTimeMillis() + ".png"));
+        } catch (Exception e) {
+        }
+
+        //choosign the status
+        Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
+        select.selectByValue("SUCCESS");
+
         WaitUtils.sendKeys(driver, ContactName, UserContName);
         WaitUtils.safeClick(driver, SearchButton);
 
