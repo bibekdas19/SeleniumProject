@@ -5,11 +5,13 @@
 package np.com.moco.seleniumproject.pages;
 
 import java.time.Duration;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import np.com.moco.seleniumproject.utils.WaitUtils;
 import np.com.moco.seleniumproject.utils.screenshots;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,6 +43,9 @@ public class FlightTickets {
     private final By selectStatus = By.xpath("//div[contains(@class, 'col-sm-2')]//select[@class='form-select']");
     private final By selectSuccessStatus = By.xpath("//div[contains(@class, 'col-sm-2')]//select[@class='form-select']//option[@value=\"SUCCESS\"]");
 
+    //locator for success result
+    
+    
     public FlightTickets(WebDriver driver) {
         this.driver = driver;
     }
@@ -67,6 +72,28 @@ public class FlightTickets {
 
         WaitUtils.sendKeys(driver, ContactName, UserContName);
         WaitUtils.safeClick(driver, SearchButton);
+
+    }
+
+    public void searchTicketWithIdOnly(String userMocoID) {
+
+        WaitUtils.safeClick(driver, flightTicketLoc);
+        WaitUtils.sendKeys(driver, mocoId, userMocoID);
+
+        //chosing date
+        WaitUtils.safeClick(driver, SearchButton);
+           Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
+        select.selectByValue("SUCCESS");
+        
+        List<WebElement> result = driver.findElements(mocoId);
+
+        if (condition) {
+            // Code to execute if the condition is true
+            screenshots.takeScreenshot(driver, "success screenshot");
+
+        } else {
+            // Code to execute if the condition is false
+        }
 
     }
 

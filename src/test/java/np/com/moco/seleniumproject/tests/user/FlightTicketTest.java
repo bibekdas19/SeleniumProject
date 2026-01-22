@@ -24,7 +24,7 @@ public class FlightTicketTest extends baseAuthenticatedTest{
     }
 
    
-    @Test
+    @Test(priority = 1)
     public void searchFlightWthAllValidCase(){
         
         flightTickets.searchTickets("9860933918", "SUCHIT BANIYA","10");
@@ -35,6 +35,11 @@ public class FlightTicketTest extends baseAuthenticatedTest{
     }
     
     
+    @Test
+    public void searchTicketsWIthMocoIDOnly(){
+    flightTickets.searchTicketWithIdOnly("9860933918");
+    
+    }
     @Test
     public void searchFlightwithInvaNumber(){
        flightTickets.searchTickets("982243", "SUCHIT BANIYA","10");
