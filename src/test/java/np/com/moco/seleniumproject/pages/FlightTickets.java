@@ -75,33 +75,33 @@ public class FlightTickets {
     }
 
     public void searchTicketWithIdOnly(String userMocoID) {
-    WaitUtils.safeClick(driver, flightTicketLoc);
-    WaitUtils.sendKeys(driver, mocoId, userMocoID);
-    
-    Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
-    select.selectByValue("SUCCESS");
-    
-    WaitUtils.safeClick(driver, SearchButton);
+        WaitUtils.safeClick(driver, flightTicketLoc);
+        WaitUtils.sendKeys(driver, mocoId, userMocoID);
 
-    // 1. ADD AN EXPLICIT WAIT HERE
-    // This waits up to 10 seconds for the specific row to appear in the DOM
-    By resultLocator = By.xpath("//tr[td[contains(., 'SUCHIT BANIYA')]]//td[contains(., 'SUCCESS')]");
-    
-    try {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement resultElement = wait.until(ExpectedConditions.visibilityOfElementLocated(resultLocator));
-        
-        // 2. SUCCESS PATH
-        screenshots.takeScreenshot(driver, "success_screenshot");
-        System.out.println("Screenshot captured for user: " + userMocoID);
-        
-    } catch (TimeoutException e) {
-        // 3. FAILURE PATH
-        screenshots.takeScreenshot(driver, "failure_not_found");
-        System.out.println("Timeout: Result row not visible after 10 seconds.");
+        Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
+        select.selectByValue("SUCCESS");
+
+        WaitUtils.safeClick(driver, SearchButton);
+
+        // 1. ADD AN EXPLICIT WAIT HERE
+        // This waits up to 10 seconds for the specific row to appear in the DOM
+        By resultLocator = By.xpath("//tr[td[contains(., 'SUCHIT BANIYA')]]//td[contains(., 'SUCCESS')]");
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement resultElement = wait.until(ExpectedConditions.visibilityOfElementLocated(resultLocator));
+
+            // 2. SUCCESS PATH
+            screenshots.takeScreenshot(driver, "success_screenshot");
+            System.out.println("Screenshot captured for user: " + userMocoID);
+
+        } catch (TimeoutException e) {
+            // 3. FAILURE PATH
+            screenshots.takeScreenshot(driver, "failure_not_found");
+            System.out.println("Timeout: Result row not visible after 10 seconds.");
+        }
     }
-}
-    
+
 //    public void searchTicketWithIdOnly(String userMocoID) {
 //
 //        WaitUtils.safeClick(driver, flightTicketLoc);
@@ -125,8 +125,6 @@ public class FlightTickets {
 //        }
 //
 //    }
-
-
     public String getErrorPopMessage() {
         return new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(invalidContNamePopMsg))

@@ -14,38 +14,37 @@ import org.testng.annotations.Test;
  *
  * @author sandesh
  */
-public class FlightTicketTest extends baseAuthenticatedTest{
-    
+public class FlightTicketTest extends baseAuthenticatedTest {
+
     private FlightTickets flightTickets;
-    
+
     @BeforeMethod
-    public void setuptest(){
+    public void setuptest() {
         flightTickets = new FlightTickets(driver);
     }
 
-   
     @Test(priority = 1)
-    public void searchFlightWthAllValidCase(){
-        
-        flightTickets.searchTickets("9860933918", "SUCHIT BANIYA","10");
+    public void searchFlightWthAllValidCase() {
+
+        flightTickets.searchTickets("9860933918", "SUCHIT BANIYA", "10");
         String acutalErrorMessage = flightTickets.getErrorPopMessage();
         System.out.println(acutalErrorMessage);
-        String expectedErrorMessage ="Invalid contact name data found.";
-        Assert.assertEquals(acutalErrorMessage,expectedErrorMessage,"Error message mismatch! ");
+        String expectedErrorMessage = "Invalid contact name data found.";
+        Assert.assertEquals(acutalErrorMessage, expectedErrorMessage, "Error message mismatch! ");
     }
-    
-    
+
     @Test
-    public void searchTicketsWIthMocoIDOnly(){
-    flightTickets.searchTicketWithIdOnly("9843069518");
-    
+    public void searchTicketsWIthMocoIDOnly() {
+        flightTickets.searchTicketWithIdOnly("9843069518");
+
     }
+
     @Test
-    public void searchFlightwithInvaNumber(){
-       flightTickets.searchTickets("982243", "SUCHIT BANIYA","10");
-       String actualErrorMessge = flightTickets.getErrorPopMessage();
+    public void searchFlightwithInvaNumber() {
+        flightTickets.searchTickets("982243", "SUCHIT BANIYA", "10");
+        String actualErrorMessge = flightTickets.getErrorPopMessage();
         System.out.println(actualErrorMessge);
         String expectedMessage = "Invalid Contact number";
-        Assert.assertEquals(actualErrorMessge,expectedMessage,"Should match");
+        Assert.assertEquals(actualErrorMessge, expectedMessage, "Should match");
     }
 }
