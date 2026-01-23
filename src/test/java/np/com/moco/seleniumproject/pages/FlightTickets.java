@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 
 import np.com.moco.seleniumproject.utils.WaitUtils;
 import np.com.moco.seleniumproject.utils.screenshots;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -44,8 +45,6 @@ public class FlightTickets {
     private final By selectSuccessStatus = By.xpath("//div[contains(@class, 'col-sm-2')]//select[@class='form-select']//option[@value=\"SUCCESS\"]");
 
     //locator for success result
-    
-    
     public FlightTickets(WebDriver driver) {
         this.driver = driver;
     }
@@ -66,7 +65,7 @@ public class FlightTickets {
             System.out.println("Unabel to screenshot");
         }
 
-        //choosign the status
+        //choose the status
         Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
         select.selectByValue("SUCCESS");
 
@@ -76,26 +75,57 @@ public class FlightTickets {
     }
 
     public void searchTicketWithIdOnly(String userMocoID) {
+    WaitUtils.safeClick(driver, flightTicketLoc);
+    WaitUtils.sendKeys(driver, mocoId, userMocoID);
+    
+    Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
+    select.selectByValue("SUCCESS");
+    
+    WaitUtils.safeClick(driver, SearchButton);
 
-        WaitUtils.safeClick(driver, flightTicketLoc);
-        WaitUtils.sendKeys(driver, mocoId, userMocoID);
-
-        //chosing date
-        WaitUtils.safeClick(driver, SearchButton);
-           Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
-        select.selectByValue("SUCCESS");
+    // 1. ADD AN EXPLICIT WAIT HERE
+    // This waits up to 10 seconds for the specific row to appear in the DOM
+    By resultLocator = By.xpath("//tr[td[contains(., 'SUCHIT BANIYA')]]//td[contains(., 'SUCCESS')]");
+    
+    try {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement resultElement = wait.until(ExpectedConditions.visibilityOfElementLocated(resultLocator));
         
-        List<WebElement> result = driver.findElements(mocoId);
-
-        if (condition) {
-            // Code to execute if the condition is true
-            screenshots.takeScreenshot(driver, "success screenshot");
-
-        } else {
-            // Code to execute if the condition is false
-        }
-
+        // 2. SUCCESS PATH
+        screenshots.takeScreenshot(driver, "success_screenshot");
+        System.out.println("Screenshot captured for user: " + userMocoID);
+        
+    } catch (TimeoutException e) {
+        // 3. FAILURE PATH
+        screenshots.takeScreenshot(driver, "failure_not_found");
+        System.out.println("Timeout: Result row not visible after 10 seconds.");
     }
+}
+    
+//    public void searchTicketWithIdOnly(String userMocoID) {
+//
+//        WaitUtils.safeClick(driver, flightTicketLoc);
+//        WaitUtils.sendKeys(driver, mocoId, userMocoID);
+//        
+//        //chose the status
+//        Select select = new Select(WaitUtils.waitForElementVisible(driver, selectStatus));
+//        select.selectByValue("SUCCESS");
+//        
+//        WaitUtils.safeClick(driver, SearchButton);
+//
+//        List<WebElement> results = driver.findElements(By.xpath("//tr[td[contains(text(), 'SUCHIT BANIYA')]]//td[text()='SUCCESS']"));
+//
+//        if (!results.isEmpty() && results.get(0).isDisplayed()) {
+//            // Code to execute if the condition is true
+//            screenshots.takeScreenshot(driver, "success screenshot");
+//
+//        } else {
+//            // Code to execute if the condition is false
+//            System.out.println("could not print the screenshot");
+//        }
+//
+//    }
+
 
     public String getErrorPopMessage() {
         return new WebDriverWait(driver, Duration.ofSeconds(5))
